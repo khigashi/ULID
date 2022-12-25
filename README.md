@@ -15,6 +15,8 @@ The Ulid class provides a number of functions that are used to generate and deco
 
 - **decodePart:** This function decodes a part of a ULID (either the timestamp or the random value) into an integer.
 
+- **isValid:** This function checks if it is a valid ULID by checking its length and the presence of only valid characters in the base-32 encoding scheme.
+
 These functions can be used to generate unique identifiers that can be used to identify resources in a distributed system.
 
 
@@ -22,7 +24,7 @@ These functions can be used to generate unique identifiers that can be used to i
 ```php
 <?php
 //generates a new ULID
-$ulid = Ulid::generate();
+$ulid = Ulid::generate(true);
 echo $ulid . "\n"; // Outputs a ULID, e.g. "01D8X5H9C41E3QJZ08RY65K2V7MTUW4B"
 
 
@@ -30,4 +32,12 @@ echo $ulid . "\n"; // Outputs a ULID, e.g. "01D8X5H9C41E3QJZ08RY65K2V7MTUW4B"
 $decoded = Ulid::decode($ulid);
 print_r($decoded);
 // Outputs: Array ( [timestamp] => 1605846396825 [random] => 34890792831795 )
+
+// You can validate ULIDs before inserting them into your database or using them in your application
+if (Ulid::isValid($ulid)) {
+    // The ULID is valid, do something with it
+} else {
+    // The ULID is invalid, handle the error
+}
+
 ```
